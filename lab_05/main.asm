@@ -153,6 +153,9 @@ main:
     mov ah, 4Ch
     int 21h
 
+; =================================
+; PROC CALCULATES THE BOTTOM LEFT CORNER OF THE MATRIX
+; =================================
 calc_position proc near
     push ax
     xor ah, ah
