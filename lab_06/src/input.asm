@@ -27,27 +27,39 @@ input_bin:
     cmp byte [ebx], '-'
     jne bin_loop
 
-    not ax
     inc ebx
 
     bin_loop:
+        mov dl, [ebx]
+        inc ebx
 
-        cmp byte [ebx], '0'
-        je increment
+        cmp dl, 0x0
+        je endl
+
+        shl ax, 1
+
+        cmp dl, '0'
+        je bin_loop
 
         inc ax
+        jmp bin_loop
 
-        increment:
-            shl ax, 1
-            inc ebx
-            cmp byte [ebx], 0
-            jnz bin_loop
+    endl:
 
-    mov [buf], eax
+        dec ax
+        shr ax, 1
 
-    pop edx
-    pop ecx
-    pop ebx
-    pop eax
+        cmp byte [buf], '-'
+        jne not_neg
+        neg ax
 
-    ret
+    not_neg:
+
+        mov [buf], eax
+
+        pop edx
+        pop ecx
+        pop ebx
+        pop eax
+
+        ret
